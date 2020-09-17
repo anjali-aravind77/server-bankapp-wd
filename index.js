@@ -49,20 +49,20 @@ app.post("/login", (req, res)=>{
     res.status(result.statusCode).json(result);
 });
 
-app.post("/deposit", (req, res)=>{
-    app.use(authMiddleWare);
+app.post("/deposit", authMiddleWare, (req, res)=>{
+    // app.use(authMiddleWare);
     const result = dataService.deposit(req.body.accno, req.body.pin, req.body.amount);
     res.status(result.statusCode).json(result);
 });
 
-app.post("/withdrawal", (req, res)=>{
-    app.use(authMiddleWare);
+app.post("/withdrawal", authMiddleWare, (req, res)=>{
+    // app.use(authMiddleWare);
     const result = dataService.withdrawal(req.body.accno, req.body.pin, req.body.amount);
     res.status(result.statusCode).json(result);
 });
 
-app.get("/getTransactions", (req, res)=>{
-    app.use(authMiddleWare);
+app.get("/getTransactions", authMiddleWare, (req, res)=>{   
+    // app.use(authMiddleWare);
     const result = dataService.getTransactions(req);
     res.status(200).json(result);
 });
