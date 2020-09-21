@@ -78,7 +78,8 @@ const  deposit = (accno, pin, balance)=> {
 
         accountDetails[account_num].transactions.push({
           tamount: amount,
-          type: "deposit"
+          type: "deposit",
+          id: Math.floor(Math.random()*1000)
         })
        // this.saveDetails();
         return {
@@ -113,7 +114,8 @@ const  deposit = (accno, pin, balance)=> {
           accountDetails[account_num].balance -= amount;
           accountDetails[account_num].transactions.push({
             tamount: amount,
-            type: "withdrawal"
+            type: "withdrawal",
+            id: Math.floor(Math.random()*1000)
           })
         //   this.saveDetails();
           return {
@@ -151,10 +153,29 @@ const  deposit = (accno, pin, balance)=> {
  
   }
 
+  const deleteTransactions = (req, id) => {
+    let transactions = accountDetails[req.session.currentUser.accno].transactions;
+    transactions = transactions.filter(t => {
+      if(t.id == id){
+        return false;
+      }
+      return true;
+    });
+    
+    accountDetails[req.session.currentUser.accno].transactions = transactions;
+    console.log(transactions);
+    return {
+      status: true,
+      statusCode: 200,
+      message: "selected transaction deleted sucesfully"
+    }
+  }
+
 module.exports = {
     register,
     login,
     deposit,
     withdrawal,
-    getTransactions
+    getTransactions,
+    deleteTransactions
 }

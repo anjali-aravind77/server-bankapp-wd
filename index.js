@@ -20,7 +20,7 @@ app.use(logMiddleWare);
 
 const authMiddleWare = (req, res, next) => {
     if(!req.session.currentUser) {
-        return res.json({ 
+        return res.status(401).json({ 
             status: false,
             statusCode: 401,
             message: "please login"
@@ -64,6 +64,12 @@ app.post("/withdrawal", authMiddleWare, (req, res)=>{
 app.get("/getTransactions", authMiddleWare, (req, res)=>{   
     // app.use(authMiddleWare);
     const result = dataService.getTransactions(req);
+    res.status(200).json(result);
+});
+
+app.delete("/getTransactions/:id", authMiddleWare, (req, res)=>{   
+    // app.use(authMiddleWare);
+    const result = dataService.deleteTransactions(req,req.params.id);
     res.status(200).json(result);
 });
 
