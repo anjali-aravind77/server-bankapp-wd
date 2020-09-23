@@ -40,19 +40,30 @@ app.get("/register", (req, res)=>{
 });
 
 app.post("/register", (req, res)=>{
-    const result = dataService.register(req.body.name, req.body.accno, req.body.pin, req.body.password);
-    res.status(result.statusCode).json(result);
+    dataService.register(req.body.name, req.body.accno, req.body.pin, req.body.password)
+    .then(result => {
+        res.status(result.statusCode).json(result);
+    });
+    // res.status.json(result);
+    // const result = dataService.register(req.body.name, req.body.accno, req.body.pin, req.body.password);
+    // res.status(result.statusCode).json(result);
+
 });
 
 app.post("/login", (req, res)=>{
-    const result = dataService.login(req, req.body.accno, req.body.password);
-    res.status(result.statusCode).json(result);
+     dataService.login(req, req.body.accno, req.body.password)
+    .then(result => {
+        res.status(result.statusCode).json(result);
+    });
 });
 
 app.post("/deposit", authMiddleWare, (req, res)=>{
     // app.use(authMiddleWare);
-    const result = dataService.deposit(req.body.accno, req.body.pin, req.body.amount);
-    res.status(result.statusCode).json(result);
+     dataService.deposit(req.body.accno, req.body.pin, req.body.amount)
+     .then(result => {
+         res.status(res.statusCode).json(result);
+     })
+    // res.status(result.statusCode).json(result);
 });
 
 app.post("/withdrawal", authMiddleWare, (req, res)=>{
