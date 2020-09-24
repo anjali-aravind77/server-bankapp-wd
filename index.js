@@ -68,20 +68,29 @@ app.post("/deposit", authMiddleWare, (req, res)=>{
 
 app.post("/withdrawal", authMiddleWare, (req, res)=>{
     // app.use(authMiddleWare);
-    const result = dataService.withdrawal(req.body.accno, req.body.pin, req.body.amount);
-    res.status(result.statusCode).json(result);
+    dataService.withdrawal(req.body.accno, req.body.pin, req.body.amount)
+    .then(result => {
+        res.status(result.statusCode).json(result);
+    })
+   
 });
 
 app.get("/getTransactions", authMiddleWare, (req, res)=>{   
     // app.use(authMiddleWare);
-    const result = dataService.getTransactions(req);
-    res.status(200).json(result);
+    dataService.getTransactions(req)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    
 });
 
 app.delete("/getTransactions/:id", authMiddleWare, (req, res)=>{   
     // app.use(authMiddleWare);
-    const result = dataService.deleteTransactions(req,req.params.id);
-    res.status(200).json(result);
+    dataService.deleteTransactions(req,req.params.id)
+    .then(result => {
+        res.status(200).json(result);
+    })
+  
 });
 
 app.listen(3000, ()=> {
