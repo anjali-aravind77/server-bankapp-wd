@@ -38,7 +38,8 @@ const login = (req, accno, password) => {
         return {
           status: true,
           statusCode: 200,
-          message: "logged in sucesfully"
+          message: "logged in sucesfully",
+          name: user.name
         }
       }
       return {

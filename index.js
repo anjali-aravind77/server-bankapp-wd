@@ -1,7 +1,14 @@
+
 const express = require("express");
 const app = express();
 const dataService = require('./services/data.service');
 const session = require("express-session");
+const cors = require("cors");
+
+app.use(cors({
+    origin:'http://localhost:4200',
+    credentials: true
+}));
 
 app.use(session({
     secret: 'randomsecurestring',
