@@ -77,7 +77,7 @@ const  deposit = (accno, pin, balance)=> {
     });   
   }
 
-  const withdrawal = (accno, pin, balance) => {       
+  const withdrawal = (req, accno, pin, balance) => {       
     var amount = parseInt(balance);
     var account_num = parseInt(accno);
 
@@ -86,6 +86,7 @@ const  deposit = (accno, pin, balance)=> {
     })
     .then(user => {
       if(user) {
+        if(req.session.currentUser == accno) {        
         if(user.balance > amount) {
         user.balance -= amount;
         user.transactions.push({
@@ -99,12 +100,20 @@ const  deposit = (accno, pin, balance)=> {
           message: "amount debited"
         }
       }
-    
       return {
         status: false,
         statusCode: 422,
         message: "insufficient balance"
       }
+
+    }
+    return {
+      status: false,
+      statusCode: 422,
+      message: "you are not allowed to make this transaction"
+    }
+    
+    
     }
     return {
       status: false,

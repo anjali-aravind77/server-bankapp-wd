@@ -19,7 +19,7 @@ app.use(session({
 app.use(express.json());
 
 const logMiddleWare = (req, res, next)=> {
-    console.log(req.body);
+    // console.log(req.body);
     next();
 }
 
@@ -75,7 +75,7 @@ app.post("/deposit", authMiddleWare, (req, res)=>{
 
 app.post("/withdrawal", authMiddleWare, (req, res)=>{
     // app.use(authMiddleWare);
-    dataService.withdrawal(req.body.accno, req.body.pin, req.body.amount)
+    dataService.withdrawal(req, req.body.accno, req.body.pin, req.body.amount)
     .then(result => {
         res.status(result.statusCode).json(result);
     })
